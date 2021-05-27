@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-
-    <training-comp :content="text" ></training-comp>
+<router-view :content="text"></router-view>
+<!--    <training-comp :content="text" ></training-comp>-->
   </div>
 </template>
 

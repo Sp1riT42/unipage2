@@ -32,6 +32,7 @@
 </template>
 
 <script>
+
 export default {
   name: "trainingComp",
   props: ['content'],
@@ -69,7 +70,9 @@ export default {
         this.goodPress++
         if(this.goodPress === 3) {
           this.finishTraining()
-          this.restartTrain() //тест окончания игры
+         //this.$parent.router.push({path: '/finish'})
+          this.$router.push('finish')
+          // this.restartTrain() //тест окончания игры
         }
       } else {
         if(!this.isError) {

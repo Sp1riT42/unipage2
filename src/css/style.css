@@ -108,6 +108,10 @@ body {
   background-color: #5bc538;
 }
 
+.goodKey {
+  color: #5bc538;
+}
+
 .err {
   background-color: #F36747;
 }
@@ -126,11 +130,37 @@ body {
   display: flex;
   justify-content: space-between;
 }
+.finish__info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.finish__info-box:not(:last-child) {
+  margin-right: 64px;
+}
 .finish__heading {
   margin-bottom: 32px;
 }
 .finish__text:not(:last-child) {
-  margin-right: 64px;
+  margin-bottom: 16px;
+}
+.finish__text_result {
+  font-size: 64px;
+  color: #5bc538;
+}
+.finish__btn {
+  margin: 16px auto 0;
+  background-color: white;
+  padding: 10px 15px;
+  color: #53e3a6;
+  border: 1px solid;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 18px;
+  transition-duration: 0.25s;
+}
+.finish__btn:hover {
+  background-color: #f5f7f9;
 }
 
 /*# sourceMappingURL=style.css.map */

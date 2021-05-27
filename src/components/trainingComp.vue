@@ -1,8 +1,14 @@
 <template>
   <div class="words">
     <p class="words__content">
-      <span :class="{active: false}" v-if="start !== index" v-for="(item,index) in content" :key="index">{{item}}</span>
-      <span :class="{active: true, err: isError}" v-else>{{item}}</span>
+<!--      <span :class="{active: false}" v-if="start !== index" v-for="(item,index) in content" :key="index">{{item}}</span>-->
+<!--      <span :class="{goodKey: true}" v-else-if="index > index-1" v-for="(item,index) in content" :key="index">{{item}}</span>-->
+<!--      <span :class="{active: true, err: isError}" v-else>{{item}}</span>-->
+      <span :class="{active: true, err: isError}" v-if="start === index" v-for="(item,index) in content" :key="index">{{item}}</span>
+      <span :class="{goodKey: true}" v-else-if="index < start">{{item}}</span>
+      <span :class="{active: false}" v-else>{{item}}</span>
+<!--      <span :class="{active: true, err: isError}" v-else>{{item}}</span>-->
+
     </p>
     <div class="words__char">
       <div>
@@ -60,17 +66,22 @@ export default {
       }
     },
     availableWord(word) {
+      console.log( this.startCheckSpeed)
       if(word === this.content[this.start]) {
         console.log('угадал')
         this.isError = false
         this.start++
         if(this.goodPress === 0) {
+
           this.startCheckSpeed = setInterval(this.checkSpeed, 1000)
         }
         this.goodPress++
-        if(this.goodPress === 3) {
+        if(this.goodPress === this.end) {
+          this.setParamsTraining()
           this.finishTraining()
          //this.$parent.router.push({path: '/finish'})
+
+          //console.log('accuracy: ',this.test())
           this.$router.push('finish')
           // this.restartTrain() //тест окончания игры
         }
@@ -84,6 +95,11 @@ export default {
         console.log('не угадал')
       }
     },
+    setParamsTraining(){
+       this.$store.state.trainingModule.speed = this.checkSpeed()
+      this.$store.state.trainingModule.accuracyPercent = this.accuracyPercent
+    }
+    ,
     checkSpeed() {
       let speed = 0
       if(this.iTime === 0) {
@@ -107,7 +123,8 @@ export default {
       this.badPress = 0
       this.startTraining = true,
          clearInterval(this.startCheckSpeed)
-       this.$parent.getJson('https://baconipsum.com/api/?type=meat-and-filler&paras=1&format=text').then(data => {
+      //this.startCheckSpeed = null
+       this.$parent.getJson('https://baconipsum.com/api/?type=meat-and-filler&sentences=1&paras=1&format=text').then(data => {
          this.$parent.text = data
        });
     },
@@ -122,6 +139,7 @@ export default {
   },
   created() {
     document.addEventListener('keydown', this.pressKey);
+    this.restartTrain()
   },
   beforeUpdate() {
     this.end = this.content.length

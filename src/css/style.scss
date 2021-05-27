@@ -110,6 +110,9 @@ body {
   border-radius: 3px;
   background-color: #5bc538;
 }
+.goodKey {
+  color: #5bc538
+}
 .err {
   background-color: #F36747;
 }
@@ -126,13 +129,40 @@ body {
   &__info {
     display: flex;
     justify-content: space-between;
+    &-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &:not(:last-child){
+        margin-right: 64px;
+      }
+    }
   }
   &__heading {
     margin-bottom: 32px;
   }
   &__text {
     &:not(:last-child){
-      margin-right: 64px;
+      margin-bottom: 16px;
+    }
+    &_result {
+      font-size: 64px;
+      color: #5bc538;
+    }
+  }
+  &__btn {
+    margin: 16px auto 0;
+    background-color: white;
+    padding: 10px 15px;
+    color: #53e3a6;
+    border: 1px solid;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 18px;
+    transition-duration: 0.25s;
+
+    &:hover {
+      background-color: rgb(245, 247, 249);
     }
   }
 }

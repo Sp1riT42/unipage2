@@ -14,8 +14,7 @@ export default new Router({
         },
         {
             path: '/finish',
-            component: finishComp,
-            props: true
+            component: finishComp
         },
     ]
 })

@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-<router-view :content="text"></router-view>
-<!--    <training-comp :content="text" ></training-comp>-->
+<router-view :content="text" v-cloak></router-view>
   </div>
 </template>
 
@@ -17,7 +16,7 @@ export default {
   },
   data() {
      return {
-       text: ''
+       text: '',
      }
   },
   methods: {
@@ -25,7 +24,7 @@ export default {
       return fetch(url)
           .then(result => result.text())
           .catch(error => {
-            //this.$refs.error.setError(error);
+            //error
           })
     },
   },
@@ -39,4 +38,7 @@ export default {
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
 </style>

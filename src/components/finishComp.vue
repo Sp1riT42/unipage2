@@ -32,7 +32,6 @@ export default {
       return this.$store.state.trainingModule.accuracyPercent
     },
   restartGame() {
-
     this.$router.push('/')
   }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="words">
+  <div class="words" v-cloak>
     <p class="words__content">
 <!--      <span :class="{active: false}" v-if="start !== index" v-for="(item,index) in content" :key="index">{{item}}</span>-->
 <!--      <span :class="{goodKey: true}" v-else-if="index > index-1" v-for="(item,index) in content" :key="index">{{item}}</span>-->
@@ -48,7 +48,6 @@ export default {
       start: 0,
       end: null,
       isError: false,
-     // iLastTime: 0,
       iSpeed: 0,
       iTime: 0,
       goodPress: 0,
@@ -73,18 +72,14 @@ export default {
         this.isError = false
         this.start++
         if(this.goodPress === 0) {
-
           this.startCheckSpeed = setInterval(this.checkSpeed, 1000)
         }
         this.goodPress++
         if(this.goodPress === this.end) {
           this.setParamsTraining()
-          this.finishTraining()
-         //this.$parent.router.push({path: '/finish'})
-
-          //console.log('accuracy: ',this.test())
+          document.removeEventListener('keydown', this.pressKey);
+          //this.finishTraining()
           this.$router.push('finish')
-          // this.restartTrain() //тест окончания игры
         }
       } else {
         if(!this.isError) {
@@ -92,70 +87,62 @@ export default {
           this.badPress++
           this.accuracyKey()
         }
-
         console.log('не угадал')
       }
     },
     setParamsTraining(){
-       //this.$store.state.trainingModule.speed = this.checkSpeed()
       this.$store.state.trainingModule.speed = this.iSpeed
       this.$store.state.trainingModule.accuracyPercent = this.accuracyPercent
-    }
-    ,
+    },
     checkSpeed() {
-      let speed = 0
       let lastTime
       if(this.iTime === 0) {
         this.iTime = new Date().getTime()
         this.iSpeed = this.goodPress / 1 * 60
       }
       else {
-       // this.iLastTime = new Date().getTime()
         lastTime = new Date().getTime()
-        //speed = Math.round(this.goodPress / (this.iLastTime - this.iTime ) * 60000)
         this.iSpeed = Math.round(this.goodPress / (lastTime - this.iTime ) * 60000)
       }
-      //return speed
     },
     restartTrain() {
       this.start = 0
       this.end = null
       this.isError = false
-     // this.iLastTime = 0
       this.iTime = 0
       this.goodPress = 0
       this.accuracyPercent = 100
       this.badPress = 0
-      this.startTraining = true,
-         clearInterval(this.startCheckSpeed)
-      //this.startCheckSpeed = null
-       this.$parent.getJson('https://baconipsum.com/api/?type=meat-and-filler&sentences=1&paras=1&format=text').then(data => {
+      this.startTraining = true
+      clearInterval(this.startCheckSpeed)
+      this.$parent.getJson('https://baconipsum.com/api/?type=meat-and-filler&sentences=1&paras=1&format=text').then(data => {
          this.$parent.text = data
        });
     },
     accuracyKey() {
       return  this.accuracyPercent = Math.round(((this.accuracyPercent - this.badPress / this.end * 100)*100))/100
     },
-    finishTraining() {
-      console.log('игра окончена')
-    },
+    // finishTraining() {
+    //   console.log('игра окончена')
+    // },
     startGame(){
       this.startTraining = !this.startTraining
       document.addEventListener('keydown', this.pressKey);
     }
     },
-
   computed: {
   },
   created() {
-
     this.restartTrain()
   },
   beforeUpdate() {
-    this.end = this.content.length
+    this.end = this.content?.length
   }
 }
 </script>
 
-<style scoped>
+<style>
+[v-cloak] {
+  display: none;
+}
 </style>

@@ -1,14 +1,12 @@
 <template>
-  <div id="app">
-<router-view :content="text"></router-view>
-<!--    <training-comp :content="text" ></training-comp>-->
+  <div id="app" class="app">
+    <h1 class="app__heading">Тренажер слепой печати</h1>
+<router-view :content="text" v-cloak></router-view>
   </div>
 </template>
 
 <script>
-
 import TrainingComp from "@/components/trainingComp";
-
 import style from '@/css/style.css'
 export default {
   name: 'App',
@@ -17,7 +15,7 @@ export default {
   },
   data() {
      return {
-       text: ''
+       text: '',
      }
   },
   methods: {
@@ -25,18 +23,17 @@ export default {
       return fetch(url)
           .then(result => result.text())
           .catch(error => {
-            //this.$refs.error.setError(error);
+            //error
           })
-    }
+    },
   },
   mounted() {
-    getJs: this.getJson('https://baconipsum.com/api/?type=meat-and-filler&paras=1&format=text')
-        .then(data => {
-          this.text = data
-        });
   }
 }
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
 </style>

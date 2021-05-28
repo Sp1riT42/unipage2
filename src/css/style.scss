@@ -25,18 +25,19 @@ body {
 }
 .popup {
   position: absolute;
+  width: 450px;
   background-color: #fff;
   margin: 0 auto;
   padding: 32px;
-  top: calc(50% - 150px);
-  left: calc(50% - 150px);
+  top: calc(50% - 75px);
+  left: calc(50% - 225px);
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 1px 1px 15px #141414;
   z-index: 2;
   &__text {
-    color: #53e3a6;
+    color: #5c5c5c;
   }
   &__btn {
     margin: 16px auto 0;
@@ -147,7 +148,7 @@ body {
     }
     &_result {
       font-size: 64px;
-      color: #5bc538;
+      color: #72f647;
     }
   }
   &__btn {

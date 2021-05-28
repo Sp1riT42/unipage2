@@ -30,10 +30,10 @@ export default {
     },
   },
   mounted() {
-    getJs: this.getJson('https://baconipsum.com/api/?type=meat-and-filler&sentences=1&paras=1&format=text')
-        .then(data => {
-          this.text = data
-        });
+    // getJs: this.getJson('https://baconipsum.com/api/?type=meat-and-filler&sentences=1&paras=1&format=text')
+    //     .then(data => {
+    //       this.text = data
+    //     });
   }
 }
 </script>

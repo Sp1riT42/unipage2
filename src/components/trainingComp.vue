@@ -15,7 +15,7 @@
         <div class="words__speed">
           <p class="words__text">Скорость</p>
           <p class="words__text">
-            <span class="words__text_main">{{checkSpeed()}}</span> зн./мин
+            <span class="words__text_main">{{iSpeed}}</span> зн./мин
           </p>
         </div>
         <div class="words__good">
@@ -31,7 +31,7 @@
     <p class="popup__text">
       Приготовьтесь печатать. Поехали!
     </p>
-    <div class="popup__btn" v-on:click="startTraining = !startTraining">Начать печатать</div>
+    <div class="popup__btn" v-on:click="startGame">Начать печатать</div>
   </div>
     <div class="overlay" v-show="startTraining"></div>
   </div>
@@ -48,7 +48,8 @@ export default {
       start: 0,
       end: null,
       isError: false,
-      iLastTime: 0,
+     // iLastTime: 0,
+      iSpeed: 0,
       iTime: 0,
       goodPress: 0,
       accuracyPercent: 100,
@@ -96,27 +97,31 @@ export default {
       }
     },
     setParamsTraining(){
-       this.$store.state.trainingModule.speed = this.checkSpeed()
+       //this.$store.state.trainingModule.speed = this.checkSpeed()
+      this.$store.state.trainingModule.speed = this.iSpeed
       this.$store.state.trainingModule.accuracyPercent = this.accuracyPercent
     }
     ,
     checkSpeed() {
       let speed = 0
+      let lastTime
       if(this.iTime === 0) {
         this.iTime = new Date().getTime()
-        speed = this.goodPress / 1 * 60
+        this.iSpeed = this.goodPress / 1 * 60
       }
       else {
-        this.iLastTime = new Date().getTime()
-        speed = Math.round(this.goodPress / (this.iLastTime - this.iTime ) * 60000)
+       // this.iLastTime = new Date().getTime()
+        lastTime = new Date().getTime()
+        //speed = Math.round(this.goodPress / (this.iLastTime - this.iTime ) * 60000)
+        this.iSpeed = Math.round(this.goodPress / (lastTime - this.iTime ) * 60000)
       }
-      return speed
+      //return speed
     },
     restartTrain() {
       this.start = 0
       this.end = null
       this.isError = false
-      this.iLastTime = 0
+     // this.iLastTime = 0
       this.iTime = 0
       this.goodPress = 0
       this.accuracyPercent = 100
@@ -133,12 +138,17 @@ export default {
     },
     finishTraining() {
       console.log('игра окончена')
+    },
+    startGame(){
+      this.startTraining = !this.startTraining
+      document.addEventListener('keydown', this.pressKey);
     }
     },
+
   computed: {
   },
   created() {
-    document.addEventListener('keydown', this.pressKey);
+
     this.restartTrain()
   },
   beforeUpdate() {

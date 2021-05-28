@@ -1,13 +1,12 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
+    <h1 class="app__heading">Тренажер слепой печати</h1>
 <router-view :content="text" v-cloak></router-view>
   </div>
 </template>
 
 <script>
-
 import TrainingComp from "@/components/trainingComp";
-
 import style from '@/css/style.css'
 export default {
   name: 'App',
@@ -29,10 +28,6 @@ export default {
     },
   },
   mounted() {
-    // getJs: this.getJson('https://baconipsum.com/api/?type=meat-and-filler&sentences=1&paras=1&format=text')
-    //     .then(data => {
-    //       this.text = data
-    //     });
   }
 }
 </script>
